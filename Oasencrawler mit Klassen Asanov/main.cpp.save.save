@@ -1,0 +1,17 @@
+#include <iostream>
+#include <time.h>
+
+#include "Gameworld.h"
+#include "Player.h"
+using namespace std;
+
+int main()
+{
+srand(time(NULL));
+Gameworld gw1;
+Gameworld gw2(13,6);
+
+gw1.printWorld;
+
+    return 0;
+}

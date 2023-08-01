@@ -1,0 +1,150 @@
+# depslib dependency file v1.0
+1677717561 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\main.cpp
+	<iostream>
+	<time.h>
+	"Gameworld.h"
+	"Player.h"
+
+1677718341 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\src\gameworld.cpp
+	"Gameworld.h"
+
+1677712880 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\include\gameworld.h
+	<iostream>
+	<string>
+
+1677714425 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\src\player.cpp
+	"Player.h"
+	"string"
+
+1677713683 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\include\player.h
+	"Gameworld.h"
+	<iostream>
+
+1677600117 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen\player.h
+
+1677827986 source:c:\users\if22b075\downloads\oasencrawler\main.cpp
+	<iostream>
+	<time.h>
+	"Gameworld.h"
+	"Player.h"
+
+1677827986 c:\users\if22b075\downloads\oasencrawler\include\gameworld.h
+	<iostream>
+	<string>
+
+1677827986 c:\users\if22b075\downloads\oasencrawler\include\player.h
+	"Gameworld.h"
+	<iostream>
+
+1677828913 source:c:\users\if22b075\downloads\oasencrawler\src\player.cpp
+	"Player.h"
+	"string"
+
+1677828794 source:c:\users\if22b075\downloads\oasencrawler\src\gameworld.cpp
+	"Gameworld.h"
+
+1677832055 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler\main.cpp
+	<iostream>
+	<time.h>
+	"Gameworld.h"
+	"Player.h"
+
+1677832056 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler\include\gameworld.h
+	<iostream>
+	<string>
+
+1677832056 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler\include\player.h
+	"Gameworld.h"
+	<iostream>
+
+1677832056 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler\src\gameworld.cpp
+	"Gameworld.h"
+
+1677832056 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler\src\player.cpp
+	"Player.h"
+	"string"
+
+1678182025 source:c:\users\if22b075\desktop\oasencrawler mit klassen (neu)\main.cpp
+	<iostream>
+	<time.h>
+	"Gameworld.h"
+	"Player.h"
+
+1678183693 c:\users\if22b075\desktop\oasencrawler mit klassen (neu)\include\gameworld.h
+	<iostream>
+	<string>
+	"Gameworld.h"
+
+1678182025 c:\users\if22b075\desktop\oasencrawler mit klassen (neu)\include\player.h
+	"Gameworld.h"
+	<iostream>
+
+1678182025 source:c:\users\if22b075\desktop\oasencrawler mit klassen (neu)\src\gameworld.cpp
+	"Gameworld.h"
+
+1678182032 source:c:\users\if22b075\desktop\oasencrawler mit klassen (neu)\src\player.cpp
+	"Player.h"
+	"string"
+
+1678221945 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\main.cpp
+	<iostream>
+	<time.h>
+	<string>
+	"Person.h"
+	"Gameworld.h"
+	"Player.h"
+
+1678219996 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\include\gameworld.h
+	<iostream>
+	<string>
+	"Person.h"
+
+1678217690 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\include\person.h
+	<iostream>
+
+1678220017 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\include\player.h
+	<string>
+	<iostream>
+	"Gameworld.h"
+
+1678218805 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\src\gameworld.cpp
+	"Gameworld.h"
+
+1678221238 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\src\person.cpp
+	"Person.h"
+
+1678221995 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen (neu) 1\src\player.cpp
+	"Player.h"
+	"string"
+
+1678312087 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\main.cpp
+	<iostream>
+	<time.h>
+	<string>
+	"Person.h"
+	"Gameworld.h"
+	"Player.h"
+
+1678217690 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\include\person.h
+	<iostream>
+
+1678312800 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\include\gameworld.h
+	<iostream>
+	<string>
+	"Person.h"
+
+1678311782 c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\include\player.h
+	<string>
+	<iostream>
+	"Gameworld.h"
+
+1678311790 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\src\gameworld.cpp
+	"Gameworld.h"
+
+1678311816 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\src\person.cpp
+	"Person.h"
+
+1678311786 source:c:\users\hajra\onedrive\fh-technikum\2.semester\pos\Übungsbsp\2. oasencrawler mit klassen\oasencrawler mit klassen asanov\src\player.cpp
+	"Player.h"
+	"string"
+

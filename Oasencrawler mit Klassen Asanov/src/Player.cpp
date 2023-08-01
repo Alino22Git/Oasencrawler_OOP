@@ -1,0 +1,430 @@
+#include "Player.h"
+#include "string"
+
+Player::Player(int lp, Gameworld *w) {
+    this->world = w;
+    if(lp < 10) {
+        this->lifepoints = lp;
+    } else {
+        std::cout<<"Lifepoints are set too high!\nLifepoints set to 5!" <<std::endl;
+    this->lifepoints=5;
+    }
+
+    this->x=0;
+    this->y=0;
+    this->respectpoints=0;
+    this->item=0;
+}
+
+
+void Player::playerInfo() {
+    std::string itemname=" ";
+    if(this->item==0) {
+        itemname="No Item";
+    } else if(this->item==1) {
+        itemname="Schwert";
+    } else if(this->item==2) {
+        itemname="Schild";
+
+    } else if(this->item==3) {
+        itemname="Uno Card";
+    }
+    using namespace std;
+    cout<<"Move with w,a,s,d"<<endl;
+    cout<<"Try to collect all relics!"<<endl;
+    cout<<"You lose if you have no lp left!"<<endl<<endl;
+    cout<<"Stats:"<<endl;
+    cout<<"Level:"<<this->GetLevel()<<endl;
+    cout<<"Life points:"<<this->lifepoints<<endl;
+    cout<<"Respect points:"<<this->respectpoints<<endl;
+    cout<<"Relics left:"<<this->GetWorld()->GetRelics()<<endl;
+    cout<<"Item: "<<itemname<<endl<<endl;
+}
+
+int Player::move(char direction) {
+    switch(direction) {
+    case 'w':
+        if(this->x>0) {
+            this->x-=1;
+        } else {
+            return 1;
+        }
+        break;
+    case 'a':
+        if(this->y>0) {
+            this->y-=1;
+        } else {
+            return 1;
+        }
+        break;
+    case 's':
+        if(this->x<this->world->GetSize()-1) {
+            this->x+=1;
+        } else {
+            return 1;
+        }
+        break;
+    case 'd':
+        if(this->y<this->world->GetSize()-1) {
+            this->y+=1;
+        } else {
+            return 1;
+        }
+        break;
+    default:
+        std::cout<<"Switch-Case Error"<<std::endl;
+        return 1;
+    }
+    return 0;
+}
+
+//1 -> relic
+//2 -> empty
+//3 -> spring
+//4 -> danger
+void Player::react() {
+    int fieldtype=this->GetWorld()->getFieldOfWorld(this->x,this->y);
+
+    switch(fieldtype) {
+    case 0:
+         std::cout<<"Human interaction!"<<std::endl;
+         playerlog.append("Human interaction.\n");
+        storytelling(world->GetPerson()->GetType());
+        world->GetPerson()->changePerson();
+        break;
+    case 1:
+        std::cout<<"You found a relic!"<<std::endl;
+        playerlog.append("The player found a relic!\n");
+        this->GetWorld()->SetRelics(this->GetWorld()->GetRelics()-1);
+        this->GetWorld()->setField(this->x,this->y,rand()%20+1);
+        break;
+    case 2:
+        std::cout<<"Nothing happend."<<std::endl;
+        break;
+    case 3:
+        if(this->lifepoints>5) {
+            std::cout<<"You found a empty spring!"<<std::endl;
+            playerlog.append("The player found a empty spring.\n");
+        } else {
+            std::cout<<"You found a holy spring."<<std::endl;
+            playerlog.append("The player found a holy spring.\n");
+            storytelling(rand()%3+4);
+        }
+        break;
+    case 4:
+playerlog.append("The player encountered something dangerous.\n");
+        storytelling(rand()%3+1);
+
+        break;
+    default:
+        std::cout<<"React Error!"<<std::endl;
+    }
+}
+
+void Player::findItem() {
+    char answer = ' ';
+    int item = rand()%3+1;
+    if(item == 3) {
+        std::cout<<"You found a uno-skip card! You want to take it? (y/n)"<<std::endl;
+        playerlog.append("The player found a uno-skip card ");
+    } else if(item == 2) {
+        std::cout<<"You found a shield! You want to take it? (y/n)"<<std::endl;
+        playerlog.append("The player found a shield ");
+    } else {
+        std::cout<<"You found a sword! You want to take it (y/n)?"<<std::endl;
+        playerlog.append("The player found a sword ");
+    }
+
+    do {
+        std::cout<<":";
+        std::cin>>answer;
+    } while(answer!='y' && answer!='n');
+    if(answer=='y') {
+        this->item=item;
+        playerlog.append("and picked it up.\n");
+    } else {
+        playerlog.append("but didn't picked it up.\n");
+        std::cout<<"You didn't pick the item up!";
+    }
+}
+
+//1 without item use
+//2 with item use
+int Player::odds(int odd,int probability, int type) {
+    char answer=' ';
+    int extra=0;
+    if(type!=1) {
+        if(this->GetItem()==1) {
+            std::cout<<"You wanna use your sword? (y/n)"<<std::endl;
+            playerlog.append("The player used the sword.\n");
+            extra=30;
+        } else if(this->GetItem()==2) {
+            std::cout<<"You wanna use your shield? (y/n)"<<std::endl;
+            playerlog.append("The player used the shield.\n");
+            extra=15;
+        } else if(this->GetItem()==3) {
+            std::cout<<"You wanna use your uno-skip card?"<<std::endl;
+            playerlog.append("The player used the uno-skip card.\n");
+            extra=100;
+        }
+        if(this->GetItem()!=0) {
+            do {
+                std::cout<<":";
+                std::cin>>answer;
+            } while(answer!='y' && answer!='n');
+            if(answer=='y') {
+                this->item=0;
+                if(probability+extra>=odd) {
+                    return 1;
+                } else {
+                    probability+=extra;
+                }
+            }
+        }
+    }
+    if(rand()%odd<probability) {
+        return 1;
+    }
+    return 0;
+}
+
+//1-3   Danger
+//4-6   Spring
+//7-9   Villain
+void Player::storytelling(int story) {
+//        std::cout<<"NUMBER OF STORY: "<<story<<std::endl;
+    char answer=' ';
+                int lp_late=lifepoints;
+    int rp_late=respectpoints;
+    std::string stories[30]= {"0","A group of goblins attack you!\nDo you want to fight them?(y/n)",
+                              "You woke up a dragon! He attacks you.\nYou want to fight him? (y/n)",
+                              "You see a slime in front of you!\nDo you attack it? (y/n)",
+                              "Do you want to wash yourself with the holy water? (y/n)",
+                              "You look in the spring and see an item!\nDo you want to pick it up? (y/n)",
+                              "You see something shiny in the water. Do you want to grab it? (y/n)",
+                              "A strange men bumped into you!\nHe pulled out a knife!\nDo you fight him? (y/n)",
+                              "You see a small girl standing in front of you. She offers you a green Apple.\nDo you eat it? (y/n)",
+                              "Someone tapped you on the shoulder.\nDo you look back? (y/n)",
+
+                              "You fought and won! (+1 Respect)",
+                              "You flee successfully!",
+                              "The goblins threw a stone on your head. You failed to flee! (-1LP)",
+                              "You got stabbed 10 times from the goblins! (-1LP)",
+                              "The dragon burnt your clothes off. Now you stand naked in front of all viewers. (-1LP & -1RP)",
+                              "The dragon is too fast. He caught you while running away! (-1LP)",
+                              "The slime jumped on you. You were confused and hit yourself! (-1LP)",
+                              "You tried to hit the slime. The slime didn't seem to care about it. A kid laughed at you. (-1Respect)",
+                              "You washed yourself with the holy water and nothing happend. (+0 LP)",
+                              "You washed yourself with the holy water. Your wounds heal and you feel more alive than before! (+1 LP)",
+                              "You don't like springs and walk away. (+1 Respect)",
+
+                              "You picked up old boots. (no item collected)",
+                              "You grab the shiny thing. It was a fish. It spit water in your face! (-1LP)",
+                              "The strange men stabbed you once and run away! (-1 LP)",
+                              "The strange threw his knife right after you started to run away! (-1LP)",
+                              "You ate the apple and vomited immediately! (-1 LP)",
+                              "You ate the apple and the girl gave you a hug. (+1 Respect)",
+                              "You didn't ate the apple. The girl started to cry! (-1Respect)",
+                              "You look behind you. In the same moment you get an injection and fall on the ground. (-1LP)",
+                              "You look behind you. You see a small girl which got lost. You help her. (+1 Respect)"
+                             };
+    do {
+
+        std::cout<<stories[story]<<std::endl;
+//        std::cout<<stories[11]<<std::endl;
+        std::cout<<":";
+        std::cin>>answer;
+    } while(answer!='y' && answer!='n');
+
+    switch(story) {
+    case 1:
+        if(answer=='y') {
+            if(odds(100,30,2)) {
+                std::cout<<stories[10]<<std::endl;
+                this->respectpoints++;
+            } else {
+                std::cout<<stories[13]<<std::endl;
+                this->lifepoints--;
+            }
+        } else {
+            if(odds(100,50,1)) {
+                std::cout<<stories[11]<<std::endl;
+            } else {
+                std::cout<<stories[12]<<std::endl;
+                this->lifepoints--;
+            }
+        }
+        break;
+    case 2:
+        if(answer=='y') {
+            if(odds(100,20,2)) {
+                std::cout<<stories[10]<<std::endl;
+                this->respectpoints++;
+            } else {
+                std::cout<<stories[14]<<std::endl;
+                this->lifepoints--;
+                this->respectpoints--;
+            }
+        } else {
+            if(odds(100,40,1)) {
+                std::cout<<stories[11]<<std::endl;
+            } else {
+                std::cout<<stories[15]<<std::endl;
+                this->lifepoints--;
+            }
+        }
+        break;
+    case 3:
+        if(answer=='y') {
+            if(odds(100,50,2)) {
+                std::cout<<stories[17]<<std::endl;
+                this->respectpoints--;
+            } else {
+                std::cout<<stories[16]<<std::endl;
+                this->lifepoints--;
+            }
+        } else {
+            std::cout<<stories[11]<<std::endl;
+        }
+        break;
+    case 4:
+        if(answer=='y') {
+            if(odds(100,60,1)) {
+                std::cout<<stories[18]<<std::endl;
+            } else {
+                std::cout<<stories[19]<<std::endl;
+                this->lifepoints++;
+            }
+        } else {
+            std::cout<<stories[20]<<std::endl;
+            this->respectpoints++;
+        }
+        break;
+    case 5:
+        if(answer=='y') {
+            if(odds(100,70,1)) {
+                findItem();
+            } else {
+                std::cout<<stories[21]<<std::endl;
+            }
+        } else {
+            std::cout<<stories[20]<<std::endl;
+            this->respectpoints++;
+        }
+        break;
+    case 6:
+        if(answer=='y') {
+            if(odds(100,65,1)) {
+                findItem();
+            } else {
+                std::cout<<stories[22]<<std::endl;
+                this->respectpoints++;
+            }
+        } else {
+            std::cout<<stories[20]<<std::endl;
+            this->respectpoints++;
+        }
+        break;
+    case 7:
+        if(answer=='y') {
+            if(odds(100,35,2)) {
+                std::cout<<stories[10]<<std::endl;
+            } else {
+                std::cout<<stories[23]<<std::endl;
+                this->respectpoints++;
+            }
+        } else {
+            if(odds(100,50,1)) {
+                std::cout<<stories[11]<<std::endl;
+            } else {
+                std::cout<<stories[24]<<std::endl;
+                this->lifepoints--;
+            }
+        }
+        break;
+    case 8:
+        if(answer=='y') {
+            if(odds(100,55,1)) {
+                std::cout<<stories[26]<<std::endl;
+                this->respectpoints++;
+            } else {
+                std::cout<<stories[25]<<std::endl;
+                this->lifepoints--;
+            }
+        } else {
+
+            std::cout<<stories[27]<<std::endl;
+            this->respectpoints--;
+        }
+        break;
+    case 9:
+        if(answer=='y') {
+            if(odds(100,65,1)) {
+                std::cout<<stories[29]<<std::endl;
+                this->respectpoints++;
+            } else {
+                std::cout<<stories[28]<<std::endl;
+                this->lifepoints--;
+            }
+        } else {
+            std::cout<<stories[11]<<std::endl;
+        }
+
+        break;
+    default:
+        std::cout<<"Story-Switch Error!"<<std::endl;
+    }
+
+    if(rp_late<respectpoints){
+        playerlog.append("The player gained +1RP.\n");
+    }else if(rp_late>respectpoints) {
+    playerlog.append("The player lost -1RP.\n");
+    }
+
+    if(lp_late<lifepoints){
+            playerlog.append("The player gained +1LP.\n");
+
+    }else if(lp_late>lifepoints){
+    playerlog.append("The player lost -1LP.\n");
+    }
+
+}
+
+void Player::increaseLevel(){
+this->level+=1;
+playerlog.append("\nLEVEL UP!!\n");
+}
+
+int Player::GetItem() const {
+    return this->item;
+}
+
+Gameworld* Player::GetWorld() {
+    return this->world;
+}
+void Player::SetWorld(Gameworld* gw){
+    this->x=0;
+    this->y=0;
+    this->world=gw;
+}
+int Player::Getx() const {
+    return this->x;
+}
+int Player::Gety() const {
+    return this->y;
+}
+int Player::GetLifepoints() const {
+    return this->lifepoints;
+}
+
+ int Player::GetLevel() const{
+ return this->level;
+ }
+
+ int Player::GetRespectpoints()const{
+     return this->respectpoints;
+ }
+
+ std::string Player::GetPlayerLog(){
+ return playerlog;
+ }
